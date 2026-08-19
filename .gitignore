@@ -1,0 +1,40 @@
+# =========================
+# Python
+# =========================
+
+__pycache__/
+*.py[cod]
+
+
+# =========================
+# Virtual Environment
+# =========================
+
+backend/smp/
+venv/
+.venv/
+
+
+# =========================
+# Environment Variables
+# =========================
+
+.env
+
+
+# =========================
+# Android / Gradle
+# =========================
+
+android-app/.gradle/
+android-app/.idea/
+android-app/build/
+android-app/app/build/
+
+
+# =========================
+# OS Files
+# =========================
+
+.DS_Store
+Thumbs.db

@@ -172,7 +172,7 @@ if st.button("Predict Final Marks"):
     try:
 
         response = requests.post(
-            "http://127.0.0.1:8000/predict",
+            "http://13.235.71.113:8000/predict",
             json=data
         )
 

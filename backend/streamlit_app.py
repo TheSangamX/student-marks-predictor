@@ -128,7 +128,7 @@ internet_access = st.selectbox(
 
 parent_education = st.selectbox(
     "Parent Education",
-    ["Diploma", "Graduate", "Postgraduate", "School"]
+    ["School", "Diploma", "Graduate", "Postgraduate"]
 )
 
 scholarship = st.selectbox(

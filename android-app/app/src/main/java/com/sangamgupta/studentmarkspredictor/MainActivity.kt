@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,17 +17,32 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.Nightlight
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.Switch
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -49,11 +65,130 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            StudentMarksPredictorTheme {
-                StudentMarksApp()
+            val systemTheme = isSystemInDarkTheme()
+            var darkTheme by remember { mutableStateOf(systemTheme) }
+            var showSettings by remember { mutableStateOf(false) }
+
+            StudentMarksPredictorTheme(darkTheme = darkTheme) {
+                if (showSettings) {
+                    SettingsScreen(
+                        isDarkTheme = darkTheme,
+                        onToggleTheme = { darkTheme = !darkTheme },
+                        onBack = { showSettings = false }
+                    )
+                } else {
+                    StudentMarksApp(onOpenSettings = { showSettings = true })
+                }
             }
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SettingsScreen(
+    isDarkTheme: Boolean,
+    onToggleTheme: () -> Unit,
+    onBack: () -> Unit
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Settings") },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            SettingsCard(title = "Appearance") {
+                ListItem(
+                    headlineContent = { Text("Dark Mode") },
+                    supportingContent = { Text(if (isDarkTheme) "Enabled" else "Disabled") },
+                    leadingContent = {
+                        Icon(
+                            imageVector = if (isDarkTheme) Icons.Default.Nightlight else Icons.Default.WbSunny,
+                            contentDescription = null
+                        )
+                    },
+                    trailingContent = {
+                        Switch(
+                            checked = isDarkTheme,
+                            onCheckedChange = { onToggleTheme() }
+                        )
+                    }
+                )
+            }
+
+            SettingsCard(title = "About") {
+                AboutRow(Icons.Default.Person, "Developer", "Sangam Gupta")
+                AboutRow(Icons.Default.Email, "Email", "contact@sangamgupta.in")
+                AboutRow(Icons.Default.Language, "Website", "sangamgupta.in")
+                AboutRow(Icons.Default.Info, "App Version", "1.0.0")
+            }
+
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer
+                ),
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Column(modifier = Modifier.padding(20.dp)) {
+                    Text(
+                        text = "🎓 Student Marks Predictor",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Text(
+                        text = "An AI-powered machine learning application that predicts student final exam marks based on academic performance, study habits, lifestyle factors, and other relevant information.",
+                        modifier = Modifier.padding(top = 12.dp),
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SettingsCard(title: String, content: @Composable () -> Unit) {
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.65f)
+        ),
+        shape = RoundedCornerShape(16.dp)
+    ) {
+        Column(modifier = Modifier.padding(vertical = 8.dp)) {
+            Text(
+                text = title,
+                modifier = Modifier.padding(start = 24.dp, top = 12.dp, bottom = 4.dp),
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.SemiBold
+            )
+            content()
+        }
+    }
+}
+
+@Composable
+private fun AboutRow(icon: androidx.compose.ui.graphics.vector.ImageVector, title: String, value: String) {
+    ListItem(
+        headlineContent = { Text(title) },
+        supportingContent = { Text(value) },
+        leadingContent = { Icon(icon, contentDescription = null) }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -119,7 +254,7 @@ fun NumberInputField(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StudentMarksApp() {
+fun StudentMarksApp(onOpenSettings: () -> Unit) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
@@ -157,7 +292,15 @@ fun StudentMarksApp() {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "🎓 Student Marks Predictor") }
+                title = { Text(text = "🎓 Student Marks Predictor") },
+                actions = {
+                    IconButton(onClick = onOpenSettings) {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = "Open settings"
+                        )
+                    }
+                }
             )
         }
     ) { paddingValues ->
@@ -256,12 +399,21 @@ fun StudentMarksApp() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 16.dp)
-                        .background(Color(0xFFE3F2FD), RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.primaryContainer, RoundedCornerShape(8.dp))
                         .padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(text = "🎯 Predicted Final Marks", fontSize = 18.sp, color = Color.Gray)
-                    Text(text = it, fontSize = 32.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1976D2))
+                    Text(
+                        text = "🎯 Predicted Final Marks", 
+                        fontSize = 18.sp, 
+                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
+                    )
+                    Text(
+                        text = it, 
+                        fontSize = 32.sp, 
+                        fontWeight = FontWeight.Bold, 
+                        color = MaterialTheme.colorScheme.primary
+                    )
                 }
             }
 
@@ -317,7 +469,7 @@ fun StudentMarksApp() {
                 contentPadding = PaddingValues(16.dp)
             ) {
                 if (isLoading) {
-                    CircularProgressIndicator(color = Color.White)
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary)
                 } else {
                     Text(text = "Predict Final Marks")
                 }

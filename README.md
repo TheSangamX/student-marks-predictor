@@ -1,163 +1,236 @@
 # 🎓 Student Marks Predictor
 
-> An end-to-end machine learning application that predicts a student's final exam marks from academic, study, lifestyle, and other student information.
+> An end-to-end machine learning application that predicts a student's final examination marks from academic, study, lifestyle, and other student-related information.
 
-[![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-REST%20API-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-Web%20App-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
-[![Kotlin](https://img.shields.io/badge/Kotlin-Android-7F52FF?logo=kotlin&logoColor=white)](https://kotlinlang.org/)
-[![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-UI-4285F4?logo=jetpackcompose&logoColor=white)](https://developer.android.com/jetpack/compose)
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
+![FastAPI](https://img.shields.io/badge/FastAPI-REST%20API-009688?logo=fastapi)
+![Streamlit](https://img.shields.io/badge/Streamlit-Web%20App-FF4B4B?logo=streamlit)
+![Kotlin](https://img.shields.io/badge/Kotlin-Android-7F52FF?logo=kotlin)
+![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-UI-4285F4)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-F7931E?logo=scikitlearn)
+![AWS EC2](https://img.shields.io/badge/AWS-EC2-FF9900?logo=amazonaws)
+![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?logo=github)
 
----
+## 📌 Overview
 
-## 📖 Table of Contents
+**Student Marks Predictor** is an end-to-end machine learning project built to understand the complete journey of taking a machine learning model from **data analysis and model development to API serving, cloud deployment, web integration, Android integration, and Google Play distribution**.
 
-- [🎓 Student Marks Predictor](#-student-marks-predictor)
-  - [📖 Table of Contents](#-table-of-contents)
-  - [📌 Project Overview](#-project-overview)
-  - [🔗 Live Applications \& Resources](#-live-applications--resources)
-  - [✨ Features](#-features)
-    - [🤖 Machine Learning Prediction](#-machine-learning-prediction)
-    - [⚡ FastAPI REST API](#-fastapi-rest-api)
-    - [🌐 Streamlit Web Application](#-streamlit-web-application)
-    - [📱 Android Application](#-android-application)
-  - [🧾 Input Features](#-input-features)
-    - [Student Information](#student-information)
-    - [Academic Information](#academic-information)
-    - [Lifestyle Information](#lifestyle-information)
-    - [Other Information](#other-information)
-  - [🛠️ Technology Stack](#️-technology-stack)
-  - [🏗️ System Architecture](#️-system-architecture)
-    - [Streamlit → FastAPI](#streamlit--fastapi)
-    - [Android → FastAPI](#android--fastapi)
-  - [⚙️ API Reference](#️-api-reference)
-    - [`GET /`](#get-)
-    - [`POST /predict`](#post-predict)
-  - [📂 Repository Structure](#-repository-structure)
-  - [📱 Android App Details](#-android-app-details)
-    - [Architecture](#architecture)
-    - [UI (Jetpack Compose)](#ui-jetpack-compose)
-    - [Dark Mode \& Settings](#dark-mode--settings)
-    - [Configuration](#configuration)
-  - [🚀 Getting Started](#-getting-started)
-    - [1. Clone the Repository](#1-clone-the-repository)
-    - [2. Create a Virtual Environment](#2-create-a-virtual-environment)
-    - [3. Install Backend Dependencies](#3-install-backend-dependencies)
-    - [4. Start FastAPI](#4-start-fastapi)
-    - [5. Run the Streamlit Application](#5-run-the-streamlit-application)
-    - [6. Android Application Setup](#6-android-application-setup)
-  - [☁️ Deployment](#️-deployment)
-    - [Backend Service](#backend-service)
-    - [API Testing](#api-testing)
-  - [🔒 Current Deployment Notes](#-current-deployment-notes)
-  - [📊 Project Status](#-project-status)
-  - [🎯 Project Objective](#-project-objective)
-  - [🔮 Future Improvements](#-future-improvements)
-  - [⚠️ Disclaimer](#️-disclaimer)
-  - [⭐ Conclusion](#-conclusion)
-  - [👨‍💻 Developer](#-developer)
+The project is organized around one central prediction service:
+
+- 🤖 **Machine Learning Pipeline** — preprocesses input data and predicts final examination marks.
+- ⚡ **FastAPI Backend** — exposes the trained model through REST API endpoints.
+- 🌐 **Streamlit Web Application** — provides a browser-based interface for predictions.
+- 📱 **Native Android Application** — built with Kotlin and Jetpack Compose.
+- ☁️ **AWS EC2 Deployment** — hosts the FastAPI backend on an Ubuntu server.
+- 📦 **Google Play Distribution** — Android application prepared and submitted for testing/release distribution.
+
+Both the Streamlit application and Android application communicate with the **same FastAPI prediction backend**.
 
 ---
 
-## 📌 Project Overview
-
-**Student Marks Predictor** is an end-to-end machine learning deployment project built to demonstrate how a trained machine learning model can be converted into usable applications across multiple platforms.
-
-The project consists of three major layers:
-
-1. **Machine Learning Model** — A trained prediction pipeline saved as a `.joblib` file.
-2. **FastAPI Backend** — Exposes the trained machine learning model through a REST API, providing a `/predict` endpoint for generating predictions.
-3. **Client Applications** — A Streamlit web application and a native Android application built using Kotlin and Jetpack Compose.
-
-Both client applications communicate with the same FastAPI prediction endpoint.
-
-**High-Level Flow**
-
-```text
-User
- │
- ├───────────────┐
- │               │
- ▼               ▼
-Streamlit      Android App
-Web App        Kotlin + Compose
- │               │
- │               │ Retrofit / HTTP
- └───────┬───────┘
-         │
-         ▼
-   FastAPI Backend
-      /predict
-         │
-         ▼
-   ML Model Pipeline
-      .joblib
-         │
-         ▼
-    Prediction
-         │
-         ▼
- Streamlit / Android
-```
-
----
-
-## 🔗 Live Applications & Resources
+## 🚀 Live Applications & Resources
 
 | Resource | Link |
 |---|---|
-| 🌐 Streamlit Web App | https://thesangamx-student-marks-predictor.streamlit.app/ |
-| 📱 Google Play | https://play.google.com/store/apps/details?id=com.sangamgupta.studentmarkspredictor |
+| 🌐 Streamlit Web Application | https://thesangamx-student-marks-predictor.streamlit.app/ |
+| 📱 Google Play Listing | https://play.google.com/store/apps/details?id=com.sangamgupta.studentmarkspredictor |
 | 🧪 Google Play Testing | https://play.google.com/apps/testing/com.sangamgupta.studentmarkspredictor |
 | 💻 Source Code | https://github.com/TheSangamX/student-marks-predictor |
 
-> **Note:** The Android application is distributed through Google Play testing/release channels. Availability of the public Play listing depends on the current Google Play rollout/review status.
+> **Note:** Google Play availability depends on the current testing, review, and rollout status.
 
 ---
 
-## ✨ Features
+# 🧭 Table of Contents
 
-### 🤖 Machine Learning Prediction
+- [Project Overview](#-overview)
+- [Project Objective](#-project-objective)
+- [End-to-End Workflow](#-end-to-end-workflow)
+- [Key Features](#-key-features)
+- [Machine Learning Workflow](#-machine-learning-workflow)
+- [Input Features](#-input-features)
+- [Technology Stack](#-technology-stack)
+- [System Architecture](#-system-architecture)
+- [API Reference](#-api-reference)
+- [Repository Structure](#-repository-structure)
+- [Android Application](#-android-application)
+- [Getting Started](#-getting-started)
+- [Deployment](#-deployment)
+- [Project Status](#-project-status)
+- [Future Improvements](#-future-improvements)
+- [Disclaimer](#️-disclaimer)
+- [Developer](#-developer)
 
-The application uses a trained machine learning prediction pipeline to estimate final examination marks. The trained model is stored at:
+---
+
+# 🎯 Project Objective
+
+The main objective of this project was not only to train a machine learning model, but to understand the complete workflow required to convert an ML solution into a usable application.
 
 ```text
-backend/
-└── model/
-    └── final_exam_predictor_model.joblib
+Data Collection
+      ↓
+Exploratory Data Analysis
+      ↓
+Preprocessing
+      ↓
+Feature Preparation
+      ↓
+Train/Test Split
+      ↓
+ML Model Training
+      ↓
+Model Evaluation
+      ↓
+Pipeline Creation
+      ↓
+Model Serialization (.joblib)
+      ↓
+FastAPI REST API
+      ↓
+AWS EC2 Deployment
+      ↓
+Streamlit Web Application
+      ↓
+Native Android Application
+      ↓
+Google Play Distribution
 ```
 
-The model is loaded by the FastAPI backend and used to generate predictions from the submitted student information.
+This project therefore combines:
 
-### ⚡ FastAPI REST API
+> **Machine Learning + Data Processing + API Development + Cloud Deployment + Web Development + Android Development**
 
-The machine learning model is exposed through a FastAPI backend (`backend/main.py`), which provides:
+---
 
-- `GET /` endpoint
-- `POST /predict` endpoint
-- Request validation using Pydantic
-- JSON request/response handling
-- Pandas DataFrame conversion before model prediction
-- Serialized ML model loading using Joblib
-- Uvicorn application server
+# 🔄 End-to-End Workflow
+
+```text
+                         ┌─────────────────────┐
+                         │   Student Data      │
+                         │  CSV Dataset        │
+                         └──────────┬──────────┘
+                                    │
+                                    ▼
+                         ┌─────────────────────┐
+                         │ EDA & Preprocessing │
+                         └──────────┬──────────┘
+                                    │
+                                    ▼
+                         ┌─────────────────────┐
+                         │ Feature Processing  │
+                         │ Scaling + Encoding  │
+                         └──────────┬──────────┘
+                                    │
+                                    ▼
+                         ┌─────────────────────┐
+                         │ Linear Regression   │
+                         └──────────┬──────────┘
+                                    │
+                                    ▼
+                         ┌─────────────────────┐
+                         │ Scikit-learn        │
+                         │ Pipeline            │
+                         └──────────┬──────────┘
+                                    │
+                                    ▼
+                         ┌─────────────────────┐
+                         │ Joblib Model File   │
+                         └──────────┬──────────┘
+                                    │
+                                    ▼
+                         ┌─────────────────────┐
+                         │ FastAPI REST API    │
+                         │ /predict            │
+                         └──────────┬──────────┘
+                                    │
+                    ┌───────────────┼───────────────┐
+                    ▼               ▼               ▼
+            Streamlit Web      Swagger Docs     Android App
+                    │                               │
+                    └───────────────┬───────────────┘
+                                    ▼
+                              Final Prediction
+```
+
+---
+
+# ✨ Key Features
+
+## 🤖 Machine Learning
+
+- Linear Regression model for predicting final examination marks.
+- 80:20 train-test split.
+- Numerical and categorical features handled through a single preprocessing pipeline.
+- `StandardScaler` applied to selected numerical features.
+- `OneHotEncoder` applied to categorical features.
+- `ColumnTransformer` used to combine preprocessing steps.
+- Complete preprocessing + model workflow stored together using a scikit-learn `Pipeline`.
+- Trained pipeline serialized using Joblib.
+
+### Why the Pipeline Matters
+
+The pipeline ensures that the same preprocessing performed during training is automatically applied when making predictions in FastAPI, Streamlit, or Android.
+
+```text
+Raw User Input
+      ↓
+ColumnTransformer
+      ├── Numerical Features → StandardScaler
+      └── Categorical Features → OneHotEncoder
+      ↓
+Linear Regression
+      ↓
+Predicted Final Marks
+```
+
+This avoids manually encoding or scaling inputs separately in every application.
+
+---
+
+## ⚡ FastAPI REST API
+
+The backend exposes the trained ML pipeline through a REST API.
+
+### Features
+
+- `GET /` health/status endpoint
+- `POST /predict` prediction endpoint
+- Pydantic request validation
+- JSON request and response handling
+- Pandas DataFrame creation before prediction
+- Joblib model loading
+- Uvicorn ASGI server
 - Swagger/OpenAPI documentation
 
-### 🌐 Streamlit Web Application
+---
 
-A Streamlit-based web interface lets users enter:
+## 🌐 Streamlit Web Application
 
-- Student information
-- Academic information
-- Lifestyle information
-- Other relevant student information
+The Streamlit application provides a simple browser interface where users can enter student information and request a prediction.
 
-The entered information is sent to the FastAPI backend, which performs the prediction. Live at: https://thesangamx-student-marks-predictor.streamlit.app/
+The application:
 
-### 📱 Android Application
+1. Collects user input.
+2. Sends an HTTP request to FastAPI.
+3. FastAPI loads and uses the ML pipeline.
+4. The prediction is returned to Streamlit.
+5. The result is displayed to the user.
 
-A native Android application built using Kotlin, Jetpack Compose, Material 3, Retrofit, Gson, and Kotlin Coroutines. The Android app communicates with the FastAPI backend rather than running the ML model locally.
+---
 
-**Android Features:**
+## 📱 Native Android Application
+
+The Android application is built using:
+
+- Kotlin
+- Jetpack Compose
+- Material 3
+- Retrofit
+- Gson
+- Kotlin Coroutines
+
+### Android Features
 
 - Student information form
 - Academic information form
@@ -166,147 +239,262 @@ A native Android application built using Kotlin, Jetpack Compose, Material 3, Re
 - Dropdown selection fields
 - Numeric input fields
 - Prediction button
-- Loading indicator
+- Loading state
 - Prediction result display
 - API error handling
 - Settings screen
 - Dark Mode toggle
 - About section
 - Developer information
-- Contact email
+- Contact information
 - Website information
 - App version information
 
+The Android application does **not** run the machine learning model locally. Instead, it sends data to the deployed FastAPI backend.
+
 ---
 
-## 🧾 Input Features
+# 🧾 Input Features
 
-The application accepts **18 input features** across four categories.
+The model uses **18 input features**, grouped into four categories.
 
-### Student Information
+## 👤 Student Information
 
-| Field | Type | Description |
+| Feature | Type | Description |
 |---|---|---|
 | `age` | Integer | Student age |
-| `gender` | String | Student gender |
-| `course` | String | Student course |
-| `year` | String | Academic year |
+| `gender` | Categorical | Student gender |
+| `course` | Categorical | Student course |
+| `year` | Categorical | Academic year |
 
-### Academic Information
+## 📚 Academic Information
 
-| Field | Type | Description |
+| Feature | Type | Description |
 |---|---|---|
-| `study_hours_per_day` | Float | Study hours per day |
-| `attendance_percent` | Float | Attendance percentage |
-| `previous_semester_marks` | Float | Previous semester marks |
-| `assignment_score` | Float | Assignment score |
-| `internal_marks` | Float | Internal marks |
+| `study_hours_per_day` | Numeric | Study hours per day |
+| `attendance_percent` | Numeric | Attendance percentage |
+| `previous_semester_marks` | Numeric | Previous semester marks |
+| `assignment_score` | Numeric | Assignment score |
+| `internal_marks` | Numeric | Internal examination marks |
 
-### Lifestyle Information
+## 🌙 Lifestyle Information
 
-| Field | Type | Description |
+| Feature | Type | Description |
 |---|---|---|
-| `sleep_hours_per_day` | Float | Sleep hours per day |
-| `screen_time_hours_per_day` | Float | Screen time hours per day |
-| `social_media_hours_per_day` | Float | Social media usage per day |
-| `practice_tests_completed` | Integer | Number of completed practice tests |
+| `sleep_hours_per_day` | Numeric | Sleep hours per day |
+| `screen_time_hours_per_day` | Numeric | Daily screen time |
+| `social_media_hours_per_day` | Numeric | Daily social media usage |
+| `practice_tests_completed` | Numeric | Number of completed practice tests |
 
-### Other Information
+## 🧩 Other Information
 
-| Field | Type | Description |
+| Feature | Type | Description |
 |---|---|---|
-| `extracurricular_level` | String | Extracurricular activity level |
-| `internet_access` | String | Internet access level |
-| `parent_education` | String | Parent education level |
-| `scholarship` | String | Scholarship status |
-| `part_time_job` | String | Part-time job status |
+| `extracurricular_level` | Categorical | Extracurricular activity level |
+| `internet_access` | Categorical | Internet access quality |
+| `parent_education` | Categorical | Parent education level |
+| `scholarship` | Categorical | Scholarship status |
+| `part_time_job` | Categorical | Part-time job status |
 
-> **Note on the ML layer:** The trained pipeline (`backend/model/final_exam_predictor_model.joblib`) receives this structured student information and returns an estimated final marks prediction. This repository does **not** claim a specific machine learning algorithm, accuracy, R² score, MAE, dataset size, or other training metric unless that information is actually available in the project source — the goal is to document the implemented project accurately rather than invent model-training results.
+> The target variable is the student's final examination marks.
 
 ---
 
-## 🛠️ Technology Stack
+# 🧠 Machine Learning Workflow
+
+## 1. Data Collection
+
+The project uses a student dataset stored in:
+
+```text
+data/
+└── students_data.csv
+```
+
+## 2. Exploratory Data Analysis
+
+The dataset was explored to understand:
+
+- Data structure
+- Column types
+- Numerical distributions
+- Categorical values
+- Summary statistics
+- Feature relationships
+- Missing values and data quality
+- The relevance of columns before training
+
+## 3. Feature Selection
+
+The serial number / identifier column was removed because it does not represent a meaningful predictive feature.
+
+The remaining input columns were used as features, while final examination marks were used as the target.
+
+```text
+X = Input Features
+y = Final Marks
+```
+
+## 4. Train-Test Split
+
+The dataset was divided into:
+
+```text
+80% → Training Data
+20% → Testing Data
+```
+
+The training data is used to fit the preprocessing steps and model, while the testing data is reserved for evaluating predictions.
+
+## 5. Preprocessing
+
+The project uses a `ColumnTransformer` inside a scikit-learn pipeline.
+
+### Numerical Features
+
+Selected numerical features are processed using:
+
+```python
+StandardScaler()
+```
+
+### Categorical Features
+
+Categorical features are processed using:
+
+```python
+OneHotEncoder()
+```
+
+## 6. Model Training
+
+The model used for this project is:
+
+```text
+Linear Regression
+```
+
+The model is trained through the pipeline, meaning preprocessing and prediction are connected together.
+
+Conceptually:
+
+```python
+pipeline.fit(X_train, y_train)
+```
+
+## 7. Prediction
+
+Predictions are generated using:
+
+```python
+pipeline.predict(X_test)
+```
+
+For real-world applications, raw user input is passed directly to the pipeline:
+
+```text
+Raw Input
+    ↓
+Pipeline
+    ├── Scaling
+    ├── Encoding
+    └── Linear Regression
+    ↓
+Prediction
+```
+
+## 8. Model Serialization
+
+The complete trained pipeline is saved using Joblib:
+
+```text
+backend/model/
+└── final_exam_predictor_model.joblib
+```
+
+Because the preprocessing and regression model are stored together, the backend can directly load the complete prediction workflow.
+
+---
+
+# 🛠️ Technology Stack
 
 | Layer | Technology |
 |---|---|
 | Programming Language | Python |
-| Machine Learning | Scikit-learn |
-| Data Processing | Pandas |
+| Data Analysis | Pandas |
 | Numerical Computing | NumPy |
+| Machine Learning | scikit-learn |
+| Model | Linear Regression |
+| Numerical Scaling | StandardScaler |
+| Categorical Encoding | OneHotEncoder |
+| Feature Transformation | ColumnTransformer |
+| ML Workflow | scikit-learn Pipeline |
 | Model Serialization | Joblib |
 | Backend API | FastAPI |
 | API Server | Uvicorn |
-| API Validation | Pydantic |
-| Web UI | Streamlit |
+| Request Validation | Pydantic |
+| Web Application | Streamlit |
+| HTTP Client | Requests |
+| Data Visualization | Matplotlib |
 | Android Language | Kotlin |
 | Android UI | Jetpack Compose |
 | UI Components | Material 3 |
 | Android Networking | Retrofit |
 | JSON Conversion | Gson |
-| Asynchronous Operations | Kotlin Coroutines |
+| Async Operations | Kotlin Coroutines |
 | Cloud Hosting | AWS EC2 |
-| Operating System | Ubuntu |
+| Server OS | Ubuntu |
+| Service Management | systemd |
 | Version Control | Git |
 | Repository Hosting | GitHub |
 | Mobile Distribution | Google Play |
 
 ---
 
-## 🏗️ System Architecture
-
-One of the main objectives of this project was to learn how a machine learning model can be deployed once and then consumed by different applications.
-
-### Streamlit → FastAPI
+# 🏗️ System Architecture
 
 ```text
-User
- ↓
-Streamlit Web UI
- ↓
-HTTP POST Request
- ↓
-FastAPI /predict
- ↓
-ML Model
- ↓
-Prediction
- ↓
-FastAPI Response
- ↓
-Streamlit
+                              ┌────────────────────┐
+                              │       User         │
+                              └─────────┬──────────┘
+                                        │
+                      ┌─────────────────┴─────────────────┐
+                      ▼                                   ▼
+          ┌─────────────────────┐             ┌─────────────────────┐
+          │ Streamlit Web App   │             │ Native Android App  │
+          └──────────┬──────────┘             └──────────┬──────────┘
+                     │ HTTP Request                        │ Retrofit / HTTP
+                     └────────────────┬────────────────────┘
+                                      ▼
+                          ┌───────────────────────┐
+                          │    FastAPI Backend    │
+                          │     POST /predict     │
+                          └───────────┬───────────┘
+                                      ▼
+                          ┌───────────────────────┐
+                          │ ML Pipeline (.joblib) │
+                          │ Scaling + Encoding +  │
+                          │ Linear Regression     │
+                          └───────────┬───────────┘
+                                      ▼
+                          ┌───────────────────────┐
+                          │ Predicted Final Marks │
+                          └───────────┬───────────┘
+                                      │
+                      ┌───────────────┴────────────────┐
+                      ▼                                ▼
+             Streamlit Result                    Android Result
 ```
-
-### Android → FastAPI
-
-```text
-User
- ↓
-Android Application
- ↓
-StudentData
- ↓
-Retrofit
- ↓
-FastAPI /predict
- ↓
-ML Model
- ↓
-PredictionResponse
- ↓
-Android UI
-```
-
-The same backend prediction service is therefore used by both applications.
 
 ---
 
-## ⚙️ API Reference
+# ⚙️ API Reference
 
-### `GET /`
+## `GET /`
 
-Verifies that the prediction API is running.
+Checks whether the prediction API is running.
 
-**Example response:**
+### Example Response
 
 ```json
 {
@@ -314,11 +502,13 @@ Verifies that the prediction API is running.
 }
 ```
 
-### `POST /predict`
+---
 
-Accepts student information and returns predicted final marks.
+## `POST /predict`
 
-**Example request:**
+Accepts student information and returns predicted final examination marks.
+
+### Example Request
 
 ```json
 {
@@ -343,7 +533,7 @@ Accepts student information and returns predicted final marks.
 }
 ```
 
-**Example response:**
+### Example Response
 
 ```json
 {
@@ -351,13 +541,17 @@ Accepts student information and returns predicted final marks.
 }
 ```
 
-> The exact prediction depends on the input values submitted to the model.
+> The exact prediction depends on the submitted input values and the trained model.
 
-Swagger/OpenAPI documentation is available at `/docs` once the backend is running.
+When running locally, interactive Swagger/OpenAPI documentation is available at:
+
+```text
+http://127.0.0.1:8000/docs
+```
 
 ---
 
-## 📂 Repository Structure
+# 📂 Repository Structure
 
 ```text
 student-marks-predictor/
@@ -387,10 +581,15 @@ student-marks-predictor/
 ├── backend/
 │   ├── model/
 │   │   └── final_exam_predictor_model.joblib
-│   │
 │   ├── main.py
-│   ├── streamlit_app.py
-│   └── requirements.txt
+│   ├── requirements.txt
+│   └── streamlit_app.py
+│
+├── data/
+│   └── students_data.csv
+│
+├── notebook/
+│   └── Student_Marks_Prediction.ipynb
 │
 ├── .gitignore
 └── README.md
@@ -398,119 +597,105 @@ student-marks-predictor/
 
 ---
 
-## 📱 Android App Details
+# 📱 Android Application
 
-### Architecture
-
-Key source files, located in `android-app/`:
+## Architecture
 
 ```text
-android-app/
-└── app/
-    └── src/
-        └── main/
-            ├── AndroidManifest.xml
-            └── java/
-                └── com/
-                    └── sangamgupta/
-                        └── studentmarkspredictor/
-                            ├── ApiClient.kt
-                            ├── ApiService.kt
-                            ├── MainActivity.kt
-                            ├── PredictionResponse.kt
-                            └── StudentData.kt
+User Input
+    ↓
+Jetpack Compose UI
+    ↓
+StudentData
+    ↓
+Retrofit
+    ↓
+FastAPI /predict
+    ↓
+PredictionResponse
+    ↓
+Result UI
 ```
 
-The Android application uses Retrofit to communicate with the FastAPI backend. The API service defines:
+## Settings and About
 
-```kotlin
-@POST("predict")
-suspend fun predictMarks(
-    @Body studentData: StudentData
-): Response<PredictionResponse>
-```
+The application includes a Settings screen with:
 
-The Android application creates a `StudentData` object from the user's inputs and sends it to the backend.
+- Dark Mode toggle
+- Project information
+- Developer information
+- Contact email
+- Website information
+- Application version
 
-### UI (Jetpack Compose)
-
-| Section | Fields |
-|---|---|
-| Student Information | Age, Gender, Course, Academic Year |
-| Academic Information | Study Hours Per Day, Attendance Percent, Previous Semester Marks, Assignment Score, Internal Marks |
-| Lifestyle Information | Sleep Hours Per Day, Screen Time Hours Per Day, Social Media Hours Per Day, Practice Tests Completed |
-| Other Information | Extracurricular Level, Internet Access, Parent Education, Scholarship, Part-Time Job |
-
-### Dark Mode & Settings
-
-The Android application includes a Settings screen with a Dark Mode toggle, plus an About section containing:
+### Current Configuration
 
 ```text
-Developer:    Sangam Gupta
-Email:        contact@sangamgupta.in
-Website:      sangamgupta.in
-App Version:  1.0.0
+Application ID: com.sangamgupta.studentmarkspredictor
+
+minSdk:         24
+targetSdk:      37
+compileSdk:     37
+
+versionCode:    2
+versionName:    1.0.1
 ```
 
-The About section also contains a project description explaining the purpose of Student Marks Predictor.
-
-### Configuration
-
-```text
-Application ID:  com.sangamgupta.studentmarkspredictor
-minSdk:          24
-targetSdk:       37
-compileSdk:      37
-versionCode:     2
-versionName:     1.0.1
-```
-
-The application includes the Internet permission because it communicates with the remotely deployed FastAPI backend.
+The application uses the Internet permission because it communicates with the remotely deployed FastAPI backend.
 
 ---
 
-## 🚀 Getting Started
+# 🚀 Getting Started
 
-### 1. Clone the Repository
+## 1. Clone the Repository
 
 ```bash
 git clone https://github.com/TheSangamX/student-marks-predictor.git
 cd student-marks-predictor
 ```
 
-### 2. Create a Virtual Environment
+## 2. Create a Virtual Environment
 
-**Windows**
+### Windows
 
 ```bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
-**Linux/macOS**
+### Linux / macOS
 
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 3. Install Backend Dependencies
+## 3. Install Dependencies
 
 ```bash
 pip install -r backend/requirements.txt
 ```
 
-### 4. Start FastAPI
+## 4. Start FastAPI
 
 ```bash
 cd backend
 uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
-- API: http://127.0.0.1:8000
-- Swagger/OpenAPI docs: http://127.0.0.1:8000/docs
+The API will run locally at:
 
-### 5. Run the Streamlit Application
+```text
+http://127.0.0.1:8000
+```
+
+Swagger documentation:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+## 5. Run the Streamlit Application
 
 From the project root:
 
@@ -518,195 +703,210 @@ From the project root:
 streamlit run backend/streamlit_app.py
 ```
 
-The Streamlit application will open in the browser and communicates with the FastAPI prediction backend.
+If running both services locally, make sure the Streamlit application's API URL points to the locally running FastAPI backend.
 
-> If you want to run Streamlit and FastAPI completely locally, configure the Streamlit API URL to point to the locally running FastAPI server.
+## 6. Run the Android Application
 
-### 6. Android Application Setup
-
-Open `android-app/` in Android Studio, then:
-
-1. Allow Android Studio to sync the Gradle project.
-2. Make sure the required Android SDK is installed.
-3. Connect an Android device or start an emulator.
-4. Build the project.
-5. Run the application.
-
-The Android application communicates with the FastAPI backend using Retrofit.
+1. Open `android-app/` in Android Studio.
+2. Allow Gradle synchronization to complete.
+3. Ensure the required Android SDK is installed.
+4. Connect an Android device or start an emulator.
+5. Build the project.
+6. Run the application.
 
 ---
 
-## ☁️ Deployment
+# ☁️ Deployment
 
-The FastAPI backend was deployed on an **AWS EC2 Ubuntu server**. The deployment process included:
+The FastAPI backend was deployed on an **AWS EC2 Ubuntu server**.
 
-1. Creating the project environment on the EC2 instance.
-2. Creating a Python virtual environment.
-3. Installing the backend dependencies.
-4. Running the FastAPI application using Uvicorn.
-5. Testing the API through Swagger/OpenAPI.
-6. Configuring the backend as a systemd service.
-7. Running the API as a background service.
-8. Configuring network access for the API.
-9. Connecting the Android application to the deployed API.
-10. Connecting the Streamlit application to the same backend.
+The deployment workflow included:
 
-**Deployment Architecture**
+1. Preparing the EC2 instance.
+2. Setting up the project environment.
+3. Creating a Python virtual environment.
+4. Installing backend dependencies.
+5. Running the FastAPI application with Uvicorn.
+6. Testing the API using Swagger/OpenAPI.
+7. Configuring the backend as a `systemd` service.
+8. Running the API as a background service.
+9. Configuring network access.
+10. Connecting the Streamlit application to the backend.
+11. Connecting the Android application to the same backend.
+
+## Deployment Architecture
 
 ```text
 GitHub Repository
-       │
-       ▼
+        │
+        ▼
 AWS EC2
-       │
-       ▼
+        │
+        ▼
 Ubuntu Server
-       │
-       ▼
+        │
+        ▼
 Python Virtual Environment
-       │
-       ▼
-FastAPI
-       │
-       ▼
-Uvicorn
-       │
-       ▼
-ML Model
-       │
-       ├───────────────┐
-       ▼               ▼
-Streamlit          Android App
+        │
+        ▼
+FastAPI + Uvicorn
+        │
+        ▼
+ML Pipeline (.joblib)
+        │
+   ┌────┴────┐
+   ▼         ▼
+Streamlit  Android
 ```
 
-### Backend Service
+## Backend Service
 
-The FastAPI backend was configured as a **systemd service** on the AWS EC2 server, allowing it to run as a background service instead of requiring Uvicorn to remain attached to an interactive terminal session. The service was tested to confirm that the API remained active and handled prediction requests successfully.
-
-### API Testing
-
-The FastAPI backend was tested using its Swagger/OpenAPI documentation (`/docs`). The `/predict` endpoint was tested with sample student data, and successful prediction requests returned `HTTP 200 OK`. The Android application was also tested against the deployed FastAPI backend and successfully displayed prediction results. The Streamlit web application was tested using the same backend prediction service.
+The FastAPI application is configured as a `systemd` service so that the backend can run as a background service rather than depending on an active terminal session.
 
 ---
 
-## 🔒 Current Deployment Notes
+# 🔒 Current Deployment Notes
 
-The current Android-to-backend connection uses an **HTTP** endpoint rather than HTTPS. Therefore, the Android application is configured with:
+The current Android-to-backend implementation uses an HTTP endpoint.
+
+For this reason, the Android application currently includes:
 
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
 ```
 
-and:
+and cleartext traffic support:
 
 ```xml
 android:usesCleartextTraffic="true"
 ```
 
-The current implementation was used for the deployed project and testing. For a future production-hardening phase, HTTPS with a proper domain name should be implemented.
+This reflects the current implementation used for deployment and testing.
+
+For a production-hardening phase, HTTPS and a properly configured domain should be considered.
 
 ---
 
-## 📊 Project Status
+# 📊 Project Status
 
-**Completed:**
+## Completed
 
-- ✅ Machine learning prediction pipeline
-- ✅ Serialized `.joblib` model
-- ✅ FastAPI REST API
-- ✅ Pydantic request schema
-- ✅ `/predict` endpoint
-- ✅ Swagger/OpenAPI testing
-- ✅ AWS EC2 deployment
-- ✅ Uvicorn server
-- ✅ systemd backend service
-- ✅ Streamlit web application
-- ✅ Streamlit deployment
-- ✅ Native Android application
-- ✅ Kotlin implementation
-- ✅ Jetpack Compose UI
-- ✅ Retrofit API integration
-- ✅ Android prediction flow
-- ✅ Loading state
-- ✅ Prediction result display
-- ✅ Error handling
-- ✅ Dark Mode
-- ✅ Settings screen
-- ✅ About section
-- ✅ Google Play testing/release setup
-- ✅ GitHub repository
+- [x] Dataset added to the repository
+- [x] Jupyter Notebook added to the repository
+- [x] Exploratory Data Analysis
+- [x] Data preprocessing
+- [x] Feature preparation
+- [x] Train/test split
+- [x] Linear Regression model
+- [x] Numerical feature scaling
+- [x] Categorical feature encoding
+- [x] ColumnTransformer
+- [x] Scikit-learn Pipeline
+- [x] Model evaluation
+- [x] Serialized Joblib model
+- [x] FastAPI REST API
+- [x] Pydantic request schema
+- [x] `/predict` endpoint
+- [x] Swagger/OpenAPI testing
+- [x] AWS EC2 deployment
+- [x] Uvicorn server
+- [x] systemd backend service
+- [x] Streamlit web application
+- [x] Streamlit deployment
+- [x] Native Android application
+- [x] Kotlin implementation
+- [x] Jetpack Compose UI
+- [x] Retrofit API integration
+- [x] Android prediction flow
+- [x] Loading state
+- [x] Prediction result display
+- [x] API error handling
+- [x] Dark Mode
+- [x] Settings screen
+- [x] About section
+- [x] Google Play testing/release setup
+- [x] GitHub repository
 
 ---
 
-## 🎯 Project Objective
+# 🔮 Future Improvements
 
-The primary objective of Student Marks Predictor was not only to build a machine learning model, but to understand and implement the complete process of taking a machine learning solution from development to deployment.
+The following are **possible future improvements** and are not claimed as currently implemented features:
+
+- HTTPS-secured backend
+- Custom backend domain
+- API authentication
+- Improved API security
+- Production monitoring and logging
+- Automated CI/CD deployment
+- Expanded automated testing
+- More comprehensive model evaluation documentation
+- Model retraining workflow
+- Model versioning
+- Input validation improvements
+- Prediction history and analytics
+- Deployment automation
+
+---
+
+# ⚠️ Disclaimer
+
+This project generates an **estimated prediction of final examination marks** based on the input features and trained machine learning model.
+
+The predicted result is **not a guarantee of actual examination performance**. Real academic outcomes can be affected by factors that may not be represented in the dataset or model.
+
+This project is intended for:
+
+- Educational purposes
+- Machine learning practice
+- API development practice
+- Deployment learning
+- Full-stack ML application development
+
+---
+
+# ⭐ What This Project Demonstrates
+
+This project demonstrates how a machine learning model can move beyond a Jupyter Notebook and become part of a complete application ecosystem.
 
 ```text
+CSV Dataset
+    ↓
+EDA
+    ↓
+Preprocessing
+    ↓
 Machine Learning
-       ↓
-Model Serialization
-       ↓
-FastAPI REST API
-       ↓
-Cloud Deployment
-       ↓
-Web Application
-       ↓
-Android Application
-       ↓
+    ↓
+Pipeline
+    ↓
+Joblib Model
+    ↓
+FastAPI
+    ↓
+AWS EC2
+    ↓
+Streamlit Web App
+    +
+Native Android App
+    ↓
 Google Play Distribution
 ```
 
-This makes the project an end-to-end demonstration of **Machine Learning + API Development + Cloud Deployment + Web Development + Android Development**.
+The same trained model is served once through FastAPI and then consumed by multiple client applications.
 
 ---
 
-## 🔮 Future Improvements
-
-The following are possible future improvements and are **not currently claimed as implemented features**:
-
-- HTTPS-secured API
-- Custom domain for the backend
-- API authentication
-- Improved API security
-- Production monitoring
-- Automated deployment pipeline
-- More comprehensive model evaluation documentation
-- Model retraining workflow
-- Expanded automated testing
-- Improved error handling
-- More detailed prediction analytics
-- Improved deployment automation
-
----
-
-## ⚠️ Disclaimer
-
-Student Marks Predictor provides an **estimated final marks prediction** generated by a machine learning model. The predicted marks are not a guarantee of actual examination results. Actual academic performance can vary depending on many factors, including factors that may not be represented in the model's input data. This application is intended for **educational and demonstration purposes**.
-
----
-
-## ⭐ Conclusion
-
-Student Marks Predictor demonstrates how a trained machine learning model can be transformed into a practical application and made accessible through multiple client platforms. The same backend prediction service powers both the Streamlit web application and the Android application, providing a clear separation between the machine learning model, API layer, and user interfaces. The project represents a complete journey from a machine learning prediction pipeline to cloud deployment and real-world application integration.
-
----
-
-## 👨‍💻 Developer
+# 👨‍💻 Developer
 
 **Sangam Gupta**
 
-- 📧 Email: contact@sangamgupta.in
 - 🌐 Website: https://sangamgupta.in
+- 📧 Email: contact@sangamgupta.in
 - 💻 GitHub: https://github.com/TheSangamX
 
 ---
 
-<div align="center">
+## ⭐ If you found this project interesting
 
-**Built by Sangam Gupta**
-
-*Predict. Plan. Perform.*
-
-</div>
+Consider giving the repository a star. It helps support the project and documents the complete journey from **machine learning development to real-world application deployment**.
